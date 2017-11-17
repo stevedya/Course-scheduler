@@ -87,5 +87,6 @@ describe('Course', function () {
             expect(errorArgs[1]).toBe('class day cannot be empty.');
         });
         // ensure that they are not empty
+
     });
 });

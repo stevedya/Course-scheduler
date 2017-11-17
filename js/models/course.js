@@ -42,6 +42,7 @@
 			}
 		});
 
+
 	// export the Course model
 	app.models || (app.models = {});
 	app.models.Course = Course;
