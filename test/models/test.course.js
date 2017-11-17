@@ -77,15 +77,8 @@ describe('Course', function () {
             var errorCallback = jasmine.createSpy('-invalid event callback-');
 
             course.on('invalid', errorCallback);
-            course.set({
-                    name: 'Food Studies',
-                    code: 'COMP1002',
-                    instructor: 'Gary',
-                    classes: [{
-                        day: 'Something'
-                    }]
-                },
-                {validate: true});  //Cant be empty
+            course.set({name: 'Food Studies', code: 'COMP1002', instructor: 'Gary'});
+            course.set(course.addClassTime({day: '', start: '5:00am', end: '2:00pm'}, {validate: true}));
 
             var errorArgs = errorCallback.calls.mostRecent().args;
 
