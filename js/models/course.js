@@ -16,7 +16,7 @@
 
 			// TODO: include a function to add class times (e.g. addClassTime(time))
 			addClassTime: function(time) {
-				this.get('classes').push(time);
+                this.get('classes').push(time);
 			},
 
 			validate: function(attrs) {
@@ -36,6 +36,12 @@
 						if(_.isEmpty(classTime.day)) {
 							return 'class day cannot be empty.';
 						}
+                        if(_.isEmpty(classTime.start)) {
+                            return 'class start cannot be empty.';
+                        }
+                        if(_.isEmpty(classTime.end)) {
+                            return 'class end cannot be empty.';
+                        }
                     });
 				}
 			    // classes can be a bit 'tricky'

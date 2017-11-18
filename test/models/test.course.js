@@ -70,23 +70,23 @@ describe('Course', function () {
         });
 
 
-        // TODO: create validation tests for code, instructor, and classes
-
         // TODO: create specific tests for classes -> day, start, and end times
-        it('ensures class time was added', function () {
-            var errorCallback = jasmine.createSpy('-invalid event callback-');
+        describe('validates set classes attributes', function () {
+            it('ensures class day was added', function () {
+                var errorCallback = jasmine.createSpy('-invalid event callback-');
 
-            course.on('invalid', errorCallback);
-            course.set({name: 'Food Studies', code: 'COMP1002', instructor: 'Gary'});
-            course.set(course.addClassTime({day: '', start: '5:00am', end: '2:00pm'}, {validate: true}));
+                course.on('invalid', errorCallback);
+                course.set({name: 'Food Studies', code: 'COMP1002', instructor: 'Gary'}, {validate: true});
+                course.validate(course.addClassTime({day: '', start: '8:00am', end: 'NEVER'}));
 
-            var errorArgs = errorCallback.calls.mostRecent().args;
+                var errorArgs = errorCallback.calls.mostRecent().args;
 
-            expect(errorArgs).toBeDefined();
-            expect(errorArgs[0]).toBe(course);
-            expect(errorArgs[1]).toBe('class day cannot be empty.');
+                expect(errorArgs).toBeDefined();
+                expect(errorArgs[0]).toBe(course);
+                expect(errorArgs[1]).toBe('class day cannot be empty.');
+            });
         });
-        // ensure that they are not empty
 
+        //Couldn't quite get it to validate properly.
     });
 });
