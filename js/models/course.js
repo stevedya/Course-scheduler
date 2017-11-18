@@ -17,6 +17,7 @@
 			// TODO: include a function to add class times (e.g. addClassTime(time))
 			addClassTime: function(time) {
                 this.get('classes').push(time);
+                this.validate();
 			},
 
 			validate: function(attrs) {

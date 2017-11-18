@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63fbf37e-2940-43bf-ba9a-5a3b7e056f8a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/models/course.js" afterPath="$PROJECT_DIR$/js/models/course.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/models/test.course.js" afterPath="$PROJECT_DIR$/test/models/test.course.js" />
@@ -32,8 +31,8 @@
       <file leaf-file-name="test.course.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/models/test.course.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1014">
-              <caret line="89" column="53" lean-forward="false" selection-start-line="89" selection-start-column="53" selection-end-line="89" selection-end-column="53" />
+            <state relative-caret-position="577">
+              <caret line="79" column="43" lean-forward="true" selection-start-line="79" selection-start-column="43" selection-end-line="79" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -42,8 +41,8 @@
       <file leaf-file-name="course.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/models/course.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="18" column="47" lean-forward="false" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
+            <state relative-caret-position="126">
+              <caret line="7" column="25" lean-forward="true" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -85,8 +84,8 @@
         <option value="$PROJECT_DIR$/test/collections/test.schedule.js" />
         <option value="$PROJECT_DIR$/test/views/test.course-view.js" />
         <option value="$PROJECT_DIR$/js/collections/schedule.js" />
-        <option value="$PROJECT_DIR$/js/models/course.js" />
         <option value="$PROJECT_DIR$/test/models/test.course.js" />
+        <option value="$PROJECT_DIR$/js/models/course.js" />
       </list>
     </option>
   </component>
@@ -261,12 +260,12 @@
       <workItem from="1510867702288" duration="1253000" />
       <workItem from="1510873123143" duration="1805000" />
       <workItem from="1510896124182" duration="4145000" />
-      <workItem from="1510941954663" duration="8360000" />
+      <workItem from="1510941954663" duration="9468000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57942000" />
+    <option name="totallyTimeSpent" value="59050000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -699,14 +698,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/models/test.course.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1014">
-          <caret line="89" column="53" lean-forward="false" selection-start-line="89" selection-start-column="53" selection-end-line="89" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/vendor/backbone.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="295">
@@ -715,10 +706,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test/models/test.course.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="577">
+          <caret line="79" column="43" lean-forward="true" selection-start-line="79" selection-start-column="43" selection-end-line="79" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/models/course.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="47" lean-forward="false" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
+        <state relative-caret-position="126">
+          <caret line="7" column="25" lean-forward="true" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
           <folding />
         </state>
       </provider>

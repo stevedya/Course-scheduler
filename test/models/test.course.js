@@ -72,12 +72,12 @@ describe('Course', function () {
 
         // TODO: create specific tests for classes -> day, start, and end times
         describe('validates set classes attributes', function () {
-            it('ensures class day was added', function () {
+            it('ensures class day was entered', function () {
                 var errorCallback = jasmine.createSpy('-invalid event callback-');
 
                 course.on('invalid', errorCallback);
                 course.set({name: 'Food Studies', code: 'COMP1002', instructor: 'Gary'}, {validate: true});
-                course.validate(course.addClassTime({day: '', start: '8:00am', end: 'NEVER'}));
+                course.addClassTime({day: '', start: '8:00am', end: 'NEVER'});
 
                 var errorArgs = errorCallback.calls.mostRecent().args;
 
