@@ -34,9 +34,7 @@
     <main>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-4 course-display">
-                 <!-- This is where the course display will go -->
-                </div>
+                <div class="col-4 course-display"></div>
                 <div class="col-8 schedule-display">
                     <h2>Schedule Display</h2>
                 </div>
@@ -54,6 +52,7 @@
     <!-- TEMPLATES -->
     <script type="text/x-handlebars-template" id="course-view-template">
         <h2>Add a Course</h2>
+        <div class="errors"></div>
         <form class="course-form">
             <div class="form-group">
                 <label for="course-code">Course Code</label>
@@ -70,7 +69,18 @@
             <fieldset class="form-group border rounded p-2">
                 <h3>Course Times</h3>
                 <!-- ADDED TIMES DISPLAY -->
-                <div class="times-display hidden">
+                <div class="times-display">
+                    <table class="class-time-table">
+                        {{#each classes}}
+                        <tr class="class-time">
+                            <td class="day">{{day}}</td>
+                            <td class="start">{{start}}</td>
+                            <td class="end">{{end}}</td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                </div>
+                <div class="time-controls hidden">
                     <div class="form-group">
                         <div class="form-group">
                             <label for="course-time-day">Day of Week</label>
@@ -91,22 +101,39 @@
                         <label for="course-time-end">End Time</label>
                         <input type="text" class="form-control" id="course-time-end" placeholder="e.g. 10:00AM">
                     </div>
-                    <button class="btn btn-secondary" type="button">Add Time</button>
+                    <button class="btn btn-secondary add-time" type="button">Add Time</button>
+                    <button class="btn btn-secondary cancel-time" type="button">Cancel Time</button>
                 </div>
                 <!-- TIME CONTROLS TEMPLATE -->
                 <div class="time-controls hidden"></div>
                 <div class="form-group btn-add-course-time">
-                    <label>Add a course time</label>
-                    <a href="#" class="btn-secondary btn-sm add-course-time"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                    <label>Add a section</label>
+                    <a href="#" class="btn btn-secondary btn-sm add-section"><i class="fa fa-plus" aria-hidden="true"></i></a>
                 </div>
             </fieldset>
             <button class="btn btn-primary" type="submit">Add Course</button>
+            <button class="btn btn-warning cancel" type="button">Done</button>
+
         </form>
     </script>
+    <script type="text/x-handlebars-template" id="course-view-errors-template">
+        <ul class="list-group">
+            {{#each errors}}
+            <li class="list-group-item">{{name}}: {{message}}</li>
+            {{/each}}
+        </ul>
+    </script>
+
+    <!-- include source files here... -->
+    <script src="js/models/course.js"></script>
+    <script src="js/collections/schedule.js"></script>
+    <script src="js/views/course-view.js"></script>
+    <script src="js/views/schedule-view.js"></script>
 
     <!-- APPLICATION SCRIPTS -->
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+
 </body>
 
 </html>

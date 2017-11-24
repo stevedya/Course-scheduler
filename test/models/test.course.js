@@ -1,26 +1,29 @@
-describe('Course', function () {
+describe('Course', function() {
 
     var course;
 
-    beforeEach(function () {
-        course = new app.models.Course(); // this is how to export
+    beforeEach(function() {
+        course = new app.models.Course();
     });
 
-    describe('contains default attributes', function () {
-        it('has a name set to \'\'', function () {
+    describe('contains default attributes', function() {
+        it('has a name', function() {
             expect(course.get('name')).toEqual('');
         });
-        it('has as course code set to \'\'', function () {
+
+        it('has a course code', function() {
             expect(course.get('code')).toEqual('');
         });
-        it('has an instructor set to \'\'', function () {
+
+        it('has an assigned instructor', function() {
             expect(course.get('instructor')).toEqual('');
         });
+
         it('has scheduled classes', function() {
             expect(course.get('classes')).toEqual(jasmine.any(Array));
         });
-    });
 
+    });
 
     describe('performs validation', function() {
         it('returns an array of error objects if validation fails for any attribute', function() {
@@ -35,11 +38,11 @@ describe('Course', function () {
         describe('validates set attributes', function() {
 
             // ************************************************************************
-            // Earlier form of validation test. Tests have been updated/added to be
+            // Earlier form of validation test. Tests have been updated/added to be 
             // simpler to check and provide a means to return multiple error messages.
             // ************************************************************************
 
-            /*
+            /* 
             it('ensures a non-empty name is provided', function() {
                 var errorArgs,
                     errorCallback = jasmine.createSpy('-invalid event callback-');
@@ -144,70 +147,67 @@ describe('Course', function () {
 
             });
         });
+    });
 
+    // ************************************************************************
+    // the following are not required for grading (i.e. you were not expected
+    // to complete them), but may be required for functionality
+    // ************************************************************************
+    describe('supports adding class times', function() {
+        it('only allows adding {day, start, end} objects', function() {
+            // test with invalid value
+            course.addClass('');
 
-        // ************************************************************************
-        // the following are not required for grading (i.e. you were not expected
-        // to complete them), but may be required for functionality
-        // ************************************************************************
-        describe('supports adding class times', function() {
-            it('only allows adding {day, start, end} objects', function() {
-                // test with invalid value
-                course.addClass('');
+            expect(course.get('classes').length).toEqual(0);
 
-                expect(course.get('classes').length).toEqual(0);
+            // test with invalid object
+            course.addClass({ start: '1:00PM', end: '3:00PM' });
+            expect(course.get('classes').length).toEqual(0);
 
-                // test with invalid object
-                course.addClass({ start: '1:00PM', end: '3:00PM' });
-                expect(course.get('classes').length).toEqual(0);
+            // test with acceptable object
+            course.addClass({ day: 'Wednesday', start: '1:00PM', end: '3:00PM' });
+            expect(course.get('classes').length).toEqual(1);
+            course.addClass({ day: 'Friday', start: '12:00PM', end: '2:00PM' });
+            expect(course.get('classes').length).toEqual(2);
 
-                // test with acceptable object
-                course.addClass({ day: 'Wednesday', start: '1:00PM', end: '3:00PM' });
-                expect(course.get('classes').length).toEqual(1);
-                course.addClass({ day: 'Friday', start: '12:00PM', end: '2:00PM' });
-                expect(course.get('classes').length).toEqual(2);
+            // UPGRADE: ensure that class times cannot be duplicated or overlap
+        });
+    });
 
-                // UPGRADE: ensure that class times cannot be duplicated or overlap
-            });
+    describe('supports removing class times', function() {
+        var removedClass;
+
+        beforeEach(function() {
+            // direct setting of good classes array
+            course.attributes.classes = [
+                { day: 'Monday', start: '1:00PM', end: '3:00PM' },
+                { day: 'Tuesday', start: '9:00AM', end: '11:00AM' },
+                { day: 'Friday', start: '10:00AM', end: '12:00PM' }
+            ];
         });
 
-        describe('supports removing class times', function() {
-            var removedClass;
+        it('removes class time objects', function() {
+            var classToRemove;
 
-            beforeEach(function() {
-                // direct setting of good classes array
-                course.attributes.classes = [
-                    { day: 'Monday', start: '1:00PM', end: '3:00PM' },
-                    { day: 'Tuesday', start: '9:00AM', end: '11:00AM' },
-                    { day: 'Friday', start: '10:00AM', end: '12:00PM' }
-                ];
-            });
+            // random invalid reference
+            course.removeClass('');
+            expect(course.get('classes').length).toEqual(3);
 
-            it('removes class time objects', function() {
-                var classToRemove;
-
-                // random invalid reference
-                course.removeClass('');
-                expect(course.get('classes').length).toEqual(3);
-
-                // good reference, remove the second class time
-                removedClass = course.removeClass(course.get('classes')[1]);
-                expect(course.get('classes').length).toEqual(2);
-                expect(course.get('classes').indexOf(removedClass)).toBe(-1);
-            });
-
-            it('removes class time objects by index', function() {
-                // random invalid index
-                course.removeClass(3);
-                expect(course.get('classes').length).toEqual(3);
-
-                // good index
-                removedClass = course.removeClass(1);
-                expect(course.get('classes').length).toEqual(2);
-                expect(course.get('classes').indexOf(removedClass)).toBe(-1);
-            });
+            // good reference, remove the second class time
+            removedClass = course.removeClass(course.get('classes')[1]);
+            expect(course.get('classes').length).toEqual(2);
+            expect(course.get('classes').indexOf(removedClass)).toBe(-1);
         });
 
-        //Couldn't quite get it to validate properly.
+        it('removes class time objects by index', function() {
+            // random invalid index
+            course.removeClass(3);
+            expect(course.get('classes').length).toEqual(3);
+
+            // good index
+            removedClass = course.removeClass(1);
+            expect(course.get('classes').length).toEqual(2);
+            expect(course.get('classes').indexOf(removedClass)).toBe(-1);
+        });
     });
 });

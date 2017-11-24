@@ -1,13 +1,19 @@
-(function (exports) {
-
+/**
+ * Course Model module. Represents a Course for a class schedule.
+ */
+(function(exports) {
     var app = exports.app || (exports.app = {}),
 
-        Course = Backbone.Model.extend({
-            defaults: {
-                code: '',
-                name: '',
-                instructor: '',
-                classes: []
+        Course = exports.Backbone.Model.extend({
+            // defaults as a function due to the classes being an array
+            // (see Backbonejs documentation http://backbonejs.org/#Model-defaults)
+            defaults: function() {
+                return {
+                    name: '',
+                    code: '',
+                    instructor: '',
+                    classes: []
+                }
             },
 
             /**
@@ -18,10 +24,11 @@
              * @param {string} classTime.end - the end time for the class
              * @returns {Boolean|undefined} - the result from calling the validate() function or undefined if the classTime did not have the required attributes
              */
-            addClass: function (classTime) {
+            addClass: function(classTime) {
                 // light validation at this level
                 if (_.isObject(classTime) && classTime.hasOwnProperty('day') && classTime.hasOwnProperty('start') && classTime.hasOwnProperty('end')) {
                     this.attributes.classes.push(classTime);
+                    this.trigger('change'); // force a render
                     return this.isValid(); // trigger full validation
                 }
             },
@@ -31,7 +38,7 @@
              * @param {Object|number} value - the actual class time object to remove or the index of the class to remove
              * @returns {Object|undefined} - the removed class time object if successful or undefined if no object was removed
              */
-            removeClass: function (value) {
+            removeClass: function(value) {
                 var idx;
 
                 if (_.isNumber(value)) {
@@ -47,7 +54,7 @@
                 }
             },
 
-            validate: function (attrs) {
+            validate: function(attrs) {
                 var errors = [];
 
                 if (attrs.hasOwnProperty('name') && _.isEmpty(attrs.name)) {
@@ -79,14 +86,14 @@
                     });
                 } else if (attrs.classes.length > 0) {
                     // array present, check for objects
-                    attrs.classes.forEach(function (session) {
+                    attrs.classes.forEach(function(session) {
                         if (!session.hasOwnProperty('day') || !session.hasOwnProperty('start') || !session.hasOwnProperty('end')) {
                             errors.push({
                                 attr: 'classes',
                                 message: 'Course.classes must be an array of {day, start, end} objects.'
                             });
                         }
-
+                        // TODO: valdiate day, start, and end...
                     });
                 }
 
@@ -96,7 +103,6 @@
                 }
             }
         });
-
 
     // export the Course model
     app.models || (app.models = {});
