@@ -26,7 +26,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Add Course</a>
+                    <a class="nav-item nav-link active add-course" href="#">Add Course</a>
                 </div>
             </div>
         </nav>
@@ -35,9 +35,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-4 course-display"></div>
-                <div class="col-8 schedule-display">
-                    <h2>Schedule Display</h2>
-                </div>
+                <div class="col-8 schedule-display"></div>
             </div>
         </div>
     </main>
@@ -52,7 +50,7 @@
     <!-- TEMPLATES -->
     <script type="text/x-handlebars-template" id="course-view-template">
         <h2>Add a Course</h2>
-        <div class="errors"></div>
+        <div class="errors text-danger"></div>
         <form class="course-form">
             <div class="form-group">
                 <label for="course-code">Course Code</label>
@@ -80,7 +78,7 @@
                         {{/each}}
                     </table>
                 </div>
-                <div class="time-controls hidden">
+                <div class="time-controls ">
                     <div class="form-group">
                         <div class="form-group">
                             <label for="course-time-day">Day of Week</label>
@@ -111,29 +109,47 @@
                     <a href="#" class="btn btn-secondary btn-sm add-section"><i class="fa fa-plus" aria-hidden="true"></i></a>
                 </div>
             </fieldset>
-            <button class="btn btn-primary" type="submit">Add Course</button>
-            <button class="btn btn-warning cancel" type="button">Done</button>
-
+            <button class="btn btn-primary" type="submit">Save Course</button>
+            <button class="btn btn-warning cancel" type="button">Cancel Course</button>
         </form>
     </script>
     <script type="text/x-handlebars-template" id="course-view-errors-template">
         <ul class="list-group">
-            {{#each errors}}
-            <li class="list-group-item">{{name}}: {{message}}</li>
-            {{/each}}
+        {{#each errors}}
+        <li class="list-group-item">{{attr}}: {{message}}</li>
+        {{/each}}
         </ul>
     </script>
-
-    <!-- include source files here... -->
+    <script type="text/x-handlebars-template" id="schedule-view-template">
+        <h2>Schedule Display</h2>
+        {{#if courses.length}}
+            <ul class="list-group">
+            {{#each courses}}
+                {{#with attributes}}
+                <li class="list-group-item">
+                    {{code}}: {{name}}
+                    <table border="1">
+                        <tr><th>Day</th><th>Start</th><th>End</th></tr>
+                        {{#each classes}}
+                        <tr><td>{{day}}</td><td>{{start}}</td><td>{{end}}</td></tr>
+                        {{/each}}
+                    </table>
+                </li>
+                {{/with}}
+            {{/each}}
+            </ul>
+        {{else}}
+            <p>No Courses</p>
+        {{/if}}
+    </script>
+    <!-- APPLICATION SCRIPTS -->
     <script src="js/models/course.js"></script>
     <script src="js/collections/schedule.js"></script>
     <script src="js/views/course-view.js"></script>
     <script src="js/views/schedule-view.js"></script>
-
-    <!-- APPLICATION SCRIPTS -->
+    <script src="js/views/app-view.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
-
 </body>
 
 </html>

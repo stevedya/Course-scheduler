@@ -7,35 +7,29 @@
 
             template: Handlebars.compile($('#schedule-view-template').html()),
 
-            errorTemplate: Handlebars.compile($('#course-view-errors-template').html()),
+            events: {
+                // TODO: event listener to view/modify an existing course
+                // TODO: [OPTIONAL] event(s) to filter the view
+            },
 
             initialize: function(options) {
                 this.options = options || {};
 
-                if (!this.options.model) {
-                    this.model = new app.models.Schedule();
+                if (!this.options.collection) {
+                    this.collection = new app.collections.Schedule();
                 }
 
-                // TODO: the view should listen to the Collection! for changes and render (hint: the model is - view.collections.models.classes)
-                //$('').html( view.render().el );
+                // TODO: the view should listen to the model for changes and render
             },
 
             render: function() {
                 this.$el.html(this.template({ courses: this.collection.models }));
                 return this;
-            },
-
-            events: {
-                //TODO: Event to view or modify existing course
-                // [optional]: Events for filtering
-                // [optional]: remove course from schedule
-
             }
-
         });
 
-    // export the CourseView model
+    // export the ScheduleView model
     app.views || (app.views = {});
-    app.views.Schedule = ScheduleView;
+    app.views.ScheduleView = ScheduleView;
 
 }(this));

@@ -88,12 +88,12 @@
                     // array present, check for objects
                     attrs.classes.forEach(function(session) {
                         if (!session.hasOwnProperty('day') || !session.hasOwnProperty('start') || !session.hasOwnProperty('end')) {
+                            // UPGRADE: better valdiation of day, start, and end...
                             errors.push({
                                 attr: 'classes',
                                 message: 'Course.classes must be an array of {day, start, end} objects.'
                             });
                         }
-                        // TODO: valdiate day, start, and end...
                     });
                 }
 

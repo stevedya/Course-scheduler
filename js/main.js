@@ -2,8 +2,8 @@
 
 	var app = exports.app || (exports.app = {});
 
-	//setup of required parts
+	// setup required app objects
 	app.schedule = new app.collections.Schedule();
-
+	app.appView = new app.views.AppView();
 
 }(this));
