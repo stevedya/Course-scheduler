@@ -1,64 +1,115 @@
-describe('ScheduleView', function() {
+describe('ScheduleView', function () {
     var view;
 
-    beforeEach(function() {
+    beforeEach(function () {
         view = new app.views.ScheduleView();
         view.render(); // need some DOM elements to test
     });
 
-    describe('renders a view', function() {
-        describe('without any courses added', function() {
-            xit('displays a message that no courses are added or exist', function() {
-                // TODO: what should be displayed when there are no courses?
+    describe('renders a view', function () {
+        describe('without any courses added', function () {
+            it('displays a message that no courses are added or exist', function () {
+
+                //Because there are no courses in the collection this message should exist
+                expect(view.$el.find('#no-courses-message')).toExist();
+
             });
         });
 
-        describe('with a course or courses', function() {
-            beforeEach(function() {
+        describe('with a course or courses', function () {
+            beforeEach(function () {
                 // mock two course mocks for testing
-                view.collection = {
+                view.collection.add([
+                    {
+                        code: 'COMP1000',
+                        name: 'Computing 1',
+                        instructor: 'Jane Doe',
+                        classes: [
+                            {
+                                day: 'Wednesday',
+                                start: '1:00PM',
+                                end: '3:00PM'
+                            },
+                            {
+                                day: 'Friday',
+                                start: '10:00AM',
+                                end: '12:00PM'
 
-                    attributes: {
-                        code: 'COMP1000',
-                        name: 'Computing 1',
-                        instructor: 'Jane Doe',
-                        classes: [{ day: 'Wednesday', start: '1:00PM', end: '3:00PM' }, { day: 'Friday', start: '10:00AM', end: '12:00PM' }]
+                            }]
                     },
-                    attributes: {
-                        code: 'COMP1000',
-                        name: 'Computing 1',
+                    {
+                        code: 'COMP1001',
+                        name: 'Computing 2',
                         instructor: 'Jane Doe',
-                        classes: [{ day: 'Wednesday', start: '1:00PM', end: '3:00PM' }, { day: 'Friday', start: '10:00AM', end: '12:00PM' }]
+                        classes: [
+                            {
+                                day: 'Tuesday',
+                                start: '1:00PM',
+                                end: '3:00PM'
+                            },
+                            {
+                                day: 'Thursday',
+                                start: '10:00AM',
+                                end: '12:00PM'
+
+                            }]
                     }
-                }
+                ]);
 
                 view.render();
+
             });
 
-            xit('renders the expected course or courses', function() {
-                // TODO: tests for display of desired courses
+            it('renders the expected course or courses', function () {
+
+                expect(view.$el.find('.schedule-name').eq(0).text()).toBe('Computing 1');
+                expect(view.$el.find('.schedule-name').eq(1).text()).toBe('Computing 2');
+
+                expect(view.$el.find('.schedule-code').eq(0).text()).toBe('COMP1000');
+                expect(view.$el.find('.schedule-code').eq(1).text()).toBe('COMP1001');
+
+            });
+
+            it('renders the expected class times', function () {
+                //tests for the first model
+                expect(view.$el.find('.class-time-row .schedule-day').eq(0).text()).toBe('Wednesday');
+                expect(view.$el.find('.class-time-row .schedule-start').eq(1).text()).toBe('10:00AM');
+
+                //tests for the second model in collection
+                expect(view.$el.find('.class-time-row .schedule-day').eq(2).text()).toBe('Tuesday');
+                expect(view.$el.find('.class-time-row .schedule-end').eq(2).text()).toBe('3:00PM');
+
             });
         });
 
-        describe('renders when collection is modified', function() {
-            xit('displays updated values', function() {
-                // TODO: complete the test
-                // (hint, need to 'listenTo' the collection in initialize: 
-                // see backbone applications text TodoView example)
+        describe('renders when collection is modified', function () {
+            it('displays updated values', function () {
+                //Set defaults and render
+                view.collection.add([{code: 'COMP1000', name: 'Computing 1'}]);
+                view.render();
+                //Make sure they are set.
+                expect(view.$el.find('.schedule-name').eq(0).text()).toBe('Computing 1');
+                //make a change to the collection
+                view.collection.set([{code: 'COMP1000', name: 'Gary 101'}]);
+                view.render();
+                //Test that it rendered properly
+                expect(view.$el.find('.schedule-name').eq(0).text()).toBe('Gary 101');
+
             });
         });
     });
 
-    describe('supports interactive events', function() {
-        xit('listens for the required events', function() {
+    describe('supports interactive events', function () {
+        it('listens for the required events', function () {
             var exptectedEvents = {
+                'click .modify-course': 'viewCourse'
                 // TODO: add event for viewing/modifying a displayed course in the view
             };
 
             expect(view.events).toEqual(exptectedEvents);
         });
 
-        xit('renders a course for modification when X is clicked', function() {
+        xit('renders a course for modification when X is clicked', function () {
             // TODO: complete the test for successful click and render
         });
     });

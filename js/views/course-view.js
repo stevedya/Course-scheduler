@@ -26,7 +26,6 @@
                     this.model = new app.models.Course();
                 }
 
-                // TODO: the view should listen to the model for changes and render
                 this.listenTo(this.model, 'change', this.render);
 
             },
@@ -100,15 +99,13 @@
 
             resetTimeForm: function() {
                 //Set the values of the fields to empty
-                this.$el.find('select#course-time-day').val('monday'); //monday is the default for the select
+                this.$el.find('select#course-time-day').val(''); //monday is the default for the select
                 this.$el.find('input#course-time-start').val('');
                 this.$el.find('input#course-time-end').val('');
                 //hide the time controls and bring the add section button back
                 this.$el.find('.btn.add-section').removeClass('hidden');
                 this.$el.find('.time-controls').addClass('hidden');
-                // TODO: complete as per your created test in test.course-view.js line 130
             }
-
         });
 
     // export the CourseView model

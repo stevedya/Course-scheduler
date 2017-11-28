@@ -8,6 +8,8 @@
             template: Handlebars.compile($('#schedule-view-template').html()),
 
             events: {
+                'click .modify-course': 'viewCourse',
+
                 // TODO: event listener to view/modify an existing course
                 // TODO: [OPTIONAL] event(s) to filter the view
             },
@@ -19,12 +21,17 @@
                     this.collection = new app.collections.Schedule();
                 }
 
-                // TODO: the view should listen to the model for changes and render
+                this.listenTo(this.collection.model, 'change', this.render);
+
             },
 
             render: function() {
                 this.$el.html(this.template({ courses: this.collection.models }));
                 return this;
+            },
+
+            viewCourse: function () {
+
             }
         });
 
