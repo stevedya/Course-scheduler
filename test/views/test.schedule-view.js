@@ -103,13 +103,12 @@ describe('ScheduleView', function () {
         it('listens for the required events', function () {
             var exptectedEvents = {
                 'click .modify-course': 'viewCourse'
-                // TODO: add event for viewing/modifying a displayed course in the view
             };
 
             expect(view.events).toEqual(exptectedEvents);
         });
 
-        xit('renders a course for modification when X is clicked', function () {
+        xit('renders a course for modification when .modify-course is clicked', function () {
             // TODO: complete the test for successful click and render
         });
     });
