@@ -51,7 +51,6 @@
                 if (this.model.isValid()) {
                     // UPGRADE: is this a new course or an existing one?
                     app.schedule.add(this.model);
-
                     // UPGRADE: reset the form fields
                 } else {
                     // invalid course, show the error messages
@@ -69,11 +68,7 @@
             },
 
             addSection: function() {
-                this.model.addClass({
-                        day: this.$el.find('select#course-time-day').val(),
-                        start: this.$el.find('input#course-time-start').val(),
-                        end: this.$el.find('input#course-time-end').val(),
-                    });
+
                 this.$el.find('.btn-add-course-time').addClass('hidden');
                 this.$el.find('.time-controls').removeClass('hidden');
             },
@@ -84,7 +79,7 @@
                     start = this.$el.find('input#course-time-start').val(),
                     end = this.$el.find('input#course-time-end').val();
 
-                // UPGRADE: complete basic validation in course.js, ensure that the day is valid, the start
+                //UPGRADE: complete basic validation in course.js, ensure that the day is valid, the start
                 // and end are correct format (you decide),and that start is before end
                 this.model.addClass({ day: day, start: start, end: end });
 
@@ -92,7 +87,9 @@
                     // display any errors from validation
                     this.renderErrors();
                 }
+
                 this.$el.find('.time-controls').addClass('hidden');
+                this.$el.find('.btn-add-course-time').removeClass('hidden');
                 this.$el.find('.btn.add-section').removeClass('hidden');
 
             },
@@ -104,6 +101,7 @@
                 this.$el.find('input#course-time-end').val('');
                 //hide the time controls and bring the add section button back
                 this.$el.find('.btn.add-section').removeClass('hidden');
+                this.$el.find('.btn-add-course-time').removeClass('hidden');
                 this.$el.find('.time-controls').addClass('hidden');
             }
         });
