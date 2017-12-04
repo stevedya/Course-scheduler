@@ -104,12 +104,42 @@ describe('ScheduleView', function () {
             var exptectedEvents = {
                 'click .modify-course': 'viewCourse'
             };
-
             expect(view.events).toEqual(exptectedEvents);
         });
 
-        xit('renders a course for modification when .modify-course is clicked', function () {
+        it('renders a course for modification when .modify-course is clicked', function () {
             // TODO: complete the test for successful click and render
+            //Dunno what i'm doing here
+            var modifyCourseSpy = jasmine.createSpy('modifyCourseSpy');
+            app.views.AppView.modifyCourseView = modifyCourseSpy;
+
+            //Add to the collection
+            view.collection.add([
+                {
+                    code: 'COMP1000',
+                    name: 'Computing 1',
+                    instructor: 'Jane Doe'
+                },
+                {
+                    code: 'COMP2000',
+                    name: 'Computing 2',
+                    instructor: 'Greg'
+                }
+            ]);
+            view.render();
+
+            //create a course view to check.
+            var appView = new app.views.AppView();
+            appView.render();
+
+            //trigger the modify button
+            view.$el.find('.list-group-item .modify-course').eq(0).trigger('click');
+
+            //check inside the course view for the course.
+            expect(appView.$el.find('input#course-code')).toHaveValue('COMP1000');
+            expect(appView.$el.find('input#course-name')).toHaveValue('Computing 1');
+            expect(appView.$el.find('input#course-instructor')).toHaveValue('Jane Doe');
+
         });
     });
 });

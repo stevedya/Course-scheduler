@@ -32,9 +32,10 @@
                 //Get the id of the button
                 var cid = $(e.target).data('id'),
                     //Get the model that matches the id
-                    theCourse = this.model.get(cid);
+                    theCourse = this.collection.get(cid);
+                console.log(cid);
                 //pass the model to the app view and do the value update
-                app.courseView.modifyCourseView(theCourse);
+                app.appView.modifyCourseView(theCourse);
             }
         });
 

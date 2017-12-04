@@ -37,8 +37,6 @@
                 model: theCourse
             });
             this.$el.find('.course-display').html(this.courseView.render().el);
-
-
         }
     });
 

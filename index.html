@@ -123,18 +123,35 @@
     </script>
     <script type="text/x-handlebars-template" id="schedule-view-template">
         <h2>Schedule Display</h2>
-        <ul class="schedule-filters">
-            <li><a href="" class="filter-day">By Day</a></li>
-            <li><a href="" class="filter-code">By Code</a></li>
-            <li><a href="" class="filter-name">By Name</a></li>
-            <li><a href="" class="filter-instructor">By Instructor</a></li>
-        </ul>
+        <div class="form-row">
+            <form class="schedule-filters form-row">
+                <div class="form-group col-sm-3">
+                    <label for="filter-day">Day</label>
+                    <input type="text" class="form-control filter-day" id="filter-day" placeholder="Filter By Day">
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="filter-code">Code</label>
+                    <input type="text" class="form-control filter-code" id="filter-code" placeholder="Filter By Code">
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="filter-name">Name</label>
+                    <input type="text" class="form-control filter-name" id="filter-name" placeholder="Filter By Name">
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="filter-instructor">Instructor</label>
+                    <input type="text" class="form-control filter-instructor" id="filter-instructor" placeholder="Filter By Instructor">
+                </div>
+                <div class="form-group col-12">
+                    <button class="btn btn-secondary modify-course" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
         {{#if courses.length}}
         <ul class="list-group">
             {{#each courses}}
             <li class="list-group-item">
-                <button class="btn btn-secondary modify-course" data-id="{{cid}}" type="button">Modify </button>
-                <span class="schedule-code">{{attributes.code}}</span>: <span class="schedule-name">{{attributes.name}}</span>
+                <h2 class="schedule-name">{{attributes.name}}</h2>
+                <strong>Course Code:</strong><p class="schedule-code">{{attributes.code}}</p>
                 <table border="1">
                     <tr>
                         <th>Day</th>
@@ -149,9 +166,11 @@
                     </tr>
                     {{/each}}
                 </table>
+                <button class="btn btn-secondary modify-course mt-3" data-id="{{cid}}" type="button">Modify </button>
             </li>
             {{/each}}
         </ul>
+
         {{else}}
         <p id="no-courses-message">No Courses on Schedule</p>
         {{/if}}
