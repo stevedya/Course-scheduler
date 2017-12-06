@@ -6,7 +6,7 @@ describe('AppView', function() {
         // tied to the body elements, no need to render
     });
 
-    // require fixtures in order to test this correctly since the view is tied to an existing element,
+    // UPGRADE [for those who want a challenge]: require fixtures in order to test this correctly since the view is tied to an existing element,
     // the required DOM elements need to be present in the text/index.html
     xdescribe('displays the schedule', function() {
         it('renders the schedule view', function() {

@@ -4,6 +4,10 @@
         Schedule = exports.Backbone.Collection.extend({
             model: app.models.Course,
 
+            url: '/courses', //For the sync
+
+            localStorage: new Backbone.LocalStorage('Schedule'), //intermediate for sync (don't need if connecting to php backend)
+
             /**
              * Filters the courses in the schedule by the day of the week.
              * @param {string} day - the day of the week to filter by

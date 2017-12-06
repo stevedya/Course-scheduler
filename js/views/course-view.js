@@ -1,10 +1,10 @@
 (function(exports) {
-
     var app = exports.app || (exports.app = {}),
 
-        CourseView = Backbone.View.extend({
+        CourseView = exports.Backbone.View.extend({
             tagName: 'div',
 
+            // Cache the template function for a single item.
             template: Handlebars.compile($('#course-view-template').html()),
 
             errorTemplate: Handlebars.compile($('#course-view-errors-template').html()),
@@ -12,26 +12,28 @@
             events: {
                 'submit .course-form': 'addUpdateCourse',
                 'click .btn.add-section': 'addSection',
-                'click .btn.add-time': 'addClassTime',
-                'click .btn.cancel-time': 'resetTimeForm',
-                'click button.cancel': 'cancelAdd'
-
-                // BONUS: add event for removing an added class time
+                'click .btn.add-class': 'addClass',
+                'click .btn.cancel-class': 'resetClassForm',
+                'click .btn.close-course': 'removeView'
             },
 
             initialize: function(options) {
                 this.options = options || {};
+                this.newCourse = false; // track whether the course is existing or new
 
+                // ensure there is always a model (Course) for the view
                 if (!this.options.model) {
-                    this.model = new app.models.Course();
+                    this.model = new app.models.Course({});
+                    this.newCourse = true;
                 }
-
                 this.listenTo(this.model, 'change', this.render);
-
             },
 
             render: function() {
                 this.$el.html(this.template(this.model.attributes));
+                if(this.newCourse) {
+                    this.$el.find('.times').addClass('hidden');
+                }
                 return this;
             },
 
@@ -39,8 +41,48 @@
                 this.$el.find('.errors').html(this.errorTemplate({ errors: this.model.validationError }));
             },
 
-            addUpdateCourse: function(evt) {
-                // gather data from the form
+            removeView: function() {
+                this.remove();
+            },
+
+            addSection: function(evt) {
+                this.$el.find('.time-controls').removeClass('hidden');
+                this.$el.find('.btn-add-course-time').addClass('hidden');
+
+                evt.preventDefault();
+            },
+
+            resetClassForm: function() {
+                this.$el.find('.time-controls').addClass('hidden');
+                this.$el.find('.btn-add-course-time').removeClass('hidden');
+
+                // return all class time fields to their default
+                this.$el.find('#course-time-day')[0].options[0].selected = 'selected';
+                this.$el.find('#course-time-start').val('');
+                this.$el.find('#course-time-end').val('');
+            },
+
+            addClass: function () {
+                // get the day, start, and end
+                var day = this.$el.find('select#course-time-day').val(),
+                    start = this.$el.find('input#course-time-start').val(),
+                    end = this.$el.find('input#course-time-end').val();
+
+                //check for validity here
+                // TODO: basic validation, ensure that the start and end are correct format and that start is before end
+
+                this.model.addClass({day: day, start: start, end: end});
+
+                if (!this.model.isValid()) {
+                    this.renderErrors();
+                } else {
+                    this.model.save(); //SYNC IT UP!
+                }
+            },
+
+            addUpdateCourse: function(e) {
+                // Gather data from form and update this.model
+
                 this.model.set({
                     code: this.$el.find('input#course-code').val(),
                     name: this.$el.find('input#course-name').val(),
@@ -49,64 +91,26 @@
 
                 // validate the model
                 if (this.model.isValid()) {
-                    // UPGRADE: is this a new course or an existing one?
-                    app.schedule.add(this.model);
-                    // UPGRADE: reset the form fields
+
+
+                    if (this.newCourse) {
+                        // add the model to the app.schedule
+                        app.schedule.add(this.model);
+                        this.newCourse = false;
+                        this.render();
+                        app.router.navigate('courses/' + this.model.id);
+
+                    }
+                    this.model.save(); //SYNC IT UP!
                 } else {
-                    // invalid course, show the error messages
                     this.renderErrors();
                 }
 
-                evt.preventDefault();
-            },
-
-            /**
-             * Removes the view from the DOM
-             */
-            cancelAdd: function () {
-                this.remove();
-            },
-
-            addSection: function() {
-
-                this.$el.find('.btn-add-course-time').addClass('hidden');
-                this.$el.find('.time-controls').removeClass('hidden');
-            },
-
-            addClassTime: function() {
-                // get the day, start, and end
-                var day = this.$el.find('select#course-time-day').val(),
-                    start = this.$el.find('input#course-time-start').val(),
-                    end = this.$el.find('input#course-time-end').val();
-
-                //UPGRADE: complete basic validation in course.js, ensure that the day is valid, the start
-                // and end are correct format (you decide),and that start is before end
-                this.model.addClass({ day: day, start: start, end: end });
-
-                if (!this.model.isValid()) {
-                    // display any errors from validation
-                    this.renderErrors();
-                }
-
-                this.$el.find('.time-controls').addClass('hidden');
-                this.$el.find('.btn-add-course-time').removeClass('hidden');
-                this.$el.find('.btn.add-section').removeClass('hidden');
-
-            },
-
-            resetTimeForm: function() {
-                //Set the values of the fields to empty
-                this.$el.find('select#course-time-day').val(''); //monday is the default for the select
-                this.$el.find('input#course-time-start').val('');
-                this.$el.find('input#course-time-end').val('');
-                //hide the time controls and bring the add section button back
-                this.$el.find('.btn.add-section').removeClass('hidden');
-                this.$el.find('.btn-add-course-time').removeClass('hidden');
-                this.$el.find('.time-controls').addClass('hidden');
+                e.preventDefault();
             }
         });
 
-    // export the CourseView model
+    // export the Course model
     app.views || (app.views = {});
     app.views.CourseView = CourseView;
 

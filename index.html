@@ -46,11 +46,12 @@
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/vendor/underscore.js"></script>
     <script src="js/vendor/backbone.js"></script>
+    <script src="js/vendor/backbone.localStorage.js"></script>
     <script src="js/vendor/handlebars-v4.0.11.js"></script>
     <!-- TEMPLATES -->
-    <script type="text/x-handlebars-template" id="course-view-template">
+        <script type="text/x-handlebars-template" id="course-view-template">
         <h2>Add a Course</h2>
-        <div class="errors"></div>
+        <div class="errors text-danger"></div>
         <form class="course-form">
             <div class="form-group">
                 <label for="course-code">Course Code</label>
@@ -58,15 +59,13 @@
             </div>
             <div class="form-group">
                 <label for="course-name">Course Name</label>
-                <input type="text" class="form-control" id="course-name" placeholder="Enter course name here"
-                       value="{{name}}">
+                <input type="text" class="form-control" id="course-name" placeholder="Enter course name here" value="{{name}}">
             </div>
             <div class="form-group">
                 <label for="course-instructor">Course Instructor</label>
-                <input type="text" class="form-control" id="course-instructor" placeholder="Enter course instructor here"
-                       value="{{instructor}}">
+                <input type="text" class="form-control" id="course-instructor" placeholder="Enter course instructor here" value="{{instructor}}">
             </div>
-            <fieldset class="form-group border rounded p-2">
+            <fieldset class="form-group border rounded p-2 times">
                 <h3>Course Times</h3>
                 <!-- ADDED TIMES DISPLAY -->
                 <div class="times-display">
@@ -101,78 +100,42 @@
                         <label for="course-time-end">End Time</label>
                         <input type="text" class="form-control" id="course-time-end" placeholder="e.g. 10:00AM">
                     </div>
-                    <button class="btn btn-secondary add-time" type="button">Add Time</button>
-                    <button class="btn btn-secondary cancel-time" type="button">Cancel Time</button>
+                    <button class="btn btn-secondary add-class" type="button">Add Time</button>
+                    <button class="btn btn-secondary cancel-class" type="button">Cancel Time</button>
                 </div>
                 <!-- TIME CONTROLS TEMPLATE -->
-                <div class="time-controls hidden"></div>
                 <div class="form-group btn-add-course-time">
                     <label>Add a section</label>
-                    <a href="#" class="btn btn-secondary btn-sm add-section"><i class="fa fa-plus"
-                                                                                aria-hidden="true"></i></a>
+                    <a href="#" class="btn btn-secondary btn-sm add-section"><i class="fa fa-plus" aria-hidden="true"></i></a>
                 </div>
             </fieldset>
-            <button class="btn btn-primary" type="submit">Add Course</button>
-            <button class="btn btn-warning cancel" type="button">Cancel Course</button>
+            <button class="btn btn-primary" type="submit">Save Course</button>
+            <button class="btn btn-info close-course" type="button">Close Course</button>
         </form>
     </script>
     <script type="text/x-handlebars-template" id="course-view-errors-template">
         {{#each errors}}
-        <p>{{name}}: {{message}}</p>
+        <p>{{attr}}: {{message}}</p>
         {{/each}}
     </script>
     <script type="text/x-handlebars-template" id="schedule-view-template">
         <h2>Schedule Display</h2>
-        <div class="form-row">
-            <form class="schedule-filters form-row">
-                <div class="form-group col-sm-3">
-                    <label for="filter-day">Day</label>
-                    <input type="text" class="form-control filter-day" id="filter-day" placeholder="Filter By Day">
-                </div>
-                <div class="form-group col-sm-3">
-                    <label for="filter-code">Code</label>
-                    <input type="text" class="form-control filter-code" id="filter-code" placeholder="Filter By Code">
-                </div>
-                <div class="form-group col-sm-3">
-                    <label for="filter-name">Name</label>
-                    <input type="text" class="form-control filter-name" id="filter-name" placeholder="Filter By Name">
-                </div>
-                <div class="form-group col-sm-3">
-                    <label for="filter-instructor">Instructor</label>
-                    <input type="text" class="form-control filter-instructor" id="filter-instructor" placeholder="Filter By Instructor">
-                </div>
-                <div class="form-group col-12">
-                    <button class="btn btn-secondary modify-course" type="submit">Submit</button>
-                </div>
-            </form>
-        </div>
         {{#if courses.length}}
-        <ul class="list-group">
+            <ul class="list-group">
             {{#each courses}}
-            <li class="list-group-item">
-                <h2 class="schedule-name">{{attributes.name}}</h2>
-                <strong>Course Code:</strong><p class="schedule-code">{{attributes.code}}</p>
-                <table border="1">
-                    <tr>
-                        <th>Day</th>
-                        <th>Start</th>
-                        <th>End</th>
-                    </tr>
-                    {{#each attributes.classes}}
-                    <tr class="class-time-row">
-                        <td class="schedule-day">{{day}}</td>
-                        <td class="schedule-start">{{start}}</td>
-                        <td class="schedule-end">{{end}}</td>
-                    </tr>
-                    {{/each}}
-                </table>
-                <button class="btn btn-secondary modify-course mt-3" data-id="{{cid}}" type="button">Modify </button>
-            </li>
+                <li class="list-group-item">
+                    {{attributes.code}}: {{attributes.name}} <a href="#" class="edit" data-id="{{cid}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <table border="1">
+                        <tr><th>Day</th><th>Start</th><th>End</th></tr>
+                        {{#each attributes.classes}}
+                        <tr><td>{{day}}</td><td>{{start}}</td><td>{{end}}</td></tr>
+                        {{/each}}
+                    </table>
+                </li>
             {{/each}}
-        </ul>
-
+            </ul>
         {{else}}
-        <p id="no-courses-message">No Courses on Schedule</p>
+            <p>No Courses</p>
         {{/if}}
     </script>
     <!-- APPLICATION SCRIPTS -->
@@ -181,6 +144,7 @@
     <script src="js/views/course-view.js"></script>
     <script src="js/views/schedule-view.js"></script>
     <script src="js/views/app-view.js"></script>
+    <script src="js/routers/app-router.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
 </body>
