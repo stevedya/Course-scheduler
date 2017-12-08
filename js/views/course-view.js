@@ -48,7 +48,6 @@
             addSection: function(evt) {
                 this.$el.find('.time-controls').removeClass('hidden');
                 this.$el.find('.btn-add-course-time').addClass('hidden');
-
                 evt.preventDefault();
             },
 
