@@ -1,1 +1,0 @@
-!function(e){var r=e.app||(e.app={}),u=e.Backbone.Router.extend({routes:{"":"index","courses/:id":"renderCourse"},index:function(){r.schedule.fetch()},renderCourse:function(e){r.schedule.fetch(),r.appView.renderCourseView({preventDefault:function(){return!1}},r.schedule.get(e))}});r.routers||(r.routers={}),r.routers.AppRouter=u}(this);

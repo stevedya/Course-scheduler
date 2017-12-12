@@ -1,0 +1,28 @@
+<h2>Schedule Display</h2>
+{{#if courses.length}}
+    <ul class="list-group">
+        {{#each courses}}
+            <li class="list-group-item">
+                {{attributes.code}}: {{attributes.name}} <a href="#" class="edit" data-id="{{cid}}"><i
+                    class="fas fa-edit"></i></a>
+                <a href="#" class="delete" data-id="{{delete}}"><i class="fas fa-trash-alt"></i></a>
+                <table border="1">
+                    <tr>
+                        <th>Day</th>
+                        <th>Start</th>
+                        <th>End</th>
+                    </tr>
+                    {{#each attributes.classes}}
+                        <tr>
+                            <td>{{day}}</td>
+                            <td>{{start}}</td>
+                            <td>{{end}}</td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>No Courses</p>
+{{/if}}

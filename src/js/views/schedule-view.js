@@ -5,7 +5,7 @@
         ScheduleView = Backbone.View.extend({
             tagName: 'div',
 
-            template: Handlebars.compile($('#schedule-view-template').html()),
+            template: Handlebars.templates['schedule-view-template'],
 
             events: {
                 'click .edit': 'modifyCourse'

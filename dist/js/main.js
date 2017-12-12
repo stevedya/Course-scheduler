@@ -1,1 +1,0 @@
-!function(e){var p=e.app||(e.app={});p.schedule=new p.collections.Schedule,p.appView=new p.views.AppView,p.router=new p.routers.AppRouter,Backbone.history.start()}(this);

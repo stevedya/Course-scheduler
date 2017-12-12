@@ -5,9 +5,10 @@
             tagName: 'div',
 
             // Cache the template function for a single item.
-            template: Handlebars.compile($('#course-view-template').html()),
+            // template: Handlebars.compile($('#course-view-template').html()),
+            template: Handlebars.templates["course-view-template"],
 
-            errorTemplate: Handlebars.compile($('#course-view-errors-template').html()),
+            errorTemplate: Handlebars.templates["course-view-errors-template"],
 
             events: {
                 'submit .course-form': 'addUpdateCourse',

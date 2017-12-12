@@ -15,7 +15,9 @@
     "gulp": "^3.9.1",
     "gulp-clean-css": "^3.9.0",
     "gulp-concat": "^2.6.1",
-    "gulp-minifier": "^0.2.2"
+    "gulp-js-minify": "0.0.3",
+    "gulp-minifier": "^0.2.2",
+    "gulp-uglify": "^3.0.0"
   },
   "dependencies": {}
 }
