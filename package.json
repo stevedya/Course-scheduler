@@ -1,0 +1,21 @@
+{
+  "name": "course-scheduler",
+  "version": "1.0.0",
+  "description": "A course scheduler done in adv javascript",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-minifier": "^0.2.2",
+    "gulp-uglify": "^3.0.0"
+  }
+}
